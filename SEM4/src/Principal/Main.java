@@ -7,10 +7,10 @@ package Principal;
 import Vista.FormMascota;
 
 public class Main {
-
+    //Este es el main
     public static void main(String[] args) {
         FormMascota fm = new FormMascota();
-        fm.setTitle("REGISTRO DE MASCOTA");
+        fm.setTitle("REGISTRO DE MASCOTA EN UNA TIENDA");
         fm.setVisible(true);
         fm.setLocationRelativeTo(null);//lo ubica en el centro de la pantalla
     }
