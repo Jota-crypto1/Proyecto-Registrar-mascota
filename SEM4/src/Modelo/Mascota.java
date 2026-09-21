@@ -25,13 +25,17 @@ public class Mascota
         Object[] fila = {nombre,tipo,edad,calEdaHumana()};
         return fila;
     }
-    //metodo calcular edad humana
-    public int calEdaHumana() 
-    {
-        int edHuma;
-        edHuma = edad * 7;
-        return edHuma;
-    }
+    //Metodo calcular edad humana
+public int calEdaHumana()
+{
+    return calEdaHumana(7);
+}
+
+//Metodo sobrecargado
+public int calEdaHumana(int multiplicador)
+{
+    return edad * multiplicador;
+}
     //Procesos de creacion:
         //Constructor con parámetros (con identidad): formulario, variables(asigna valores), objeto
         //Constructor sin parámetros (sin identidad): formulario, objeto, variables(asigna valores)
