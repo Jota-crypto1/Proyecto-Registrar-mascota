@@ -13,7 +13,7 @@ public class FormMascota extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormMascota.class.getName());
     //Coleccion de objeto mascota
-    ArrayList<Mascota> listMascota = new ArrayList<>();
+    private final ArrayList<Mascota> listMascota = new ArrayList<>();
     //modelo de la tabla
     DefaultTableModel modTabla;
     //constructor
@@ -111,25 +111,53 @@ public class FormMascota extends javax.swing.JFrame {
      cbxTipo.addItem("Loro");
     }
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        try{
-            //crear el objeto
-            Mascota mas = new Mascota();
-            //enviamos la informacion
-            mas.setNombre(txtNombreMascot.getText());
-            mas.setTipo(cbxTipo.getSelectedItem().toString());
-            mas.setEdad(Integer.parseInt(txtEdad.getText()));
-            //guarda el objeto en el ArrayList
-            listMascota.add(mas);
-            //mostrar el objeto en table
-            modTabla.addRow(mas.RegistrarDatos());
-            //mostrar la cantidad
-            lblCantidad.setText("Mascotas registradas: "+
-                                listMascota.size());
-            JOptionPane.showMessageDialog(null, "Mascota correctamene registrada");
-            LimpiarEntradas();
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, "No se puede registrar la mascota");
+        String nombre = txtNombreMascot.getText().trim();
+    String edadTexto = txtEdad.getText().trim();
+
+    //Validar campos vacios
+    if (nombre.isEmpty() || edadTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(null,"Complete todos los campos");
+        return;
+    }
+
+    try {
+        int edad = Integer.parseInt(edadTexto);
+
+        //Validar edad
+        if (edad <= 0) {
+            throw new IllegalArgumentException("La edad debe ser mayor que 0");
         }
+
+        //Crear el objeto
+        Mascota mas = new Mascota();
+
+        //Enviar informacion
+        mas.setNombre(nombre);
+        mas.setTipo(cbxTipo.getSelectedItem().toString());
+        mas.setEdad(edad);
+
+        //Guardar objeto en el ArrayList
+        listMascota.add(mas);
+
+        //Mostrar objeto en tabla
+        modTabla.addRow(mas.RegistrarDatos());
+
+        //Mostrar cantidad
+        lblCantidad.setText("Mascotas registradas: " + listMascota.size());
+
+        JOptionPane.showMessageDialog(null,"Mascota correctamente registrada");
+
+        LimpiarEntradas();
+
+    } catch (NumberFormatException ex) {
+
+        JOptionPane.showMessageDialog(null,"La edad debe ser un número entero");
+
+    } catch (IllegalArgumentException ex) {
+
+        JOptionPane.showMessageDialog(null,
+                ex.getMessage());
+    }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
